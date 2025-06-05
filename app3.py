@@ -20,11 +20,10 @@ colors = ["#59dbff", "#19c419", "#c51e1e", "#e46e1a", "#1e18d5"]
 
 # Indicadores normais
 indicadores = {
-    'Dívida bruta geral do governo': ('GC.DOD.TOTL.GD.ZS', 'Percentual do PIB (%)', '%'),
+    'Despesa de consumo do governo (% do PIB)': ('GC.XPN.TOTL.GD.ZS', 'Percentual do PIB', '%'),
     'Receita fiscal total': ('GC.TAX.TOTL.GD.ZS', 'Percentual do PIB (%)', '%'),
     'Estoques totais de dívida externa (em USD)': ('DT.DOD.DECT.CD', 'Valor absoluto (USD)', ''),
-    'Crédito doméstico ao setor privado (% do PIB)': ('FS.AST.PRVT.GD.ZS', 'Percentual do PIB (%)', '%'),
-    'PIB': ('NY.GDP.MKTP.CD', 'Valor nominal (USD)', '')
+    'Crédito doméstico ao setor privado (% do PIB)': ('FS.AST.PRVT.GD.ZS', 'Percentual do PIB (%)', '%')
 }
 
 # Adiciona o indicador especial do Espaço Fiscal
@@ -73,13 +72,12 @@ def plot_indicador(titulo, indicador_id, legenda_y, sufixo_valor, paises_selecio
 def calcular_espaco_fiscal(paises_selecionados, anos_selecionados):
     codigos_paises = [paises[p] for p in paises_selecionados]
 
-    indicadores_lista = ['GC.DOD.TOTL.GD.ZS',
+    indicadores_lista = ['GC.XPN.TOTL.GD.ZS',
                         'GC.TAX.TOTL.GD.ZS',
-                        'DT.DOD.DECT.CD',
-                        'FS.AST.PRVT.GD.ZS',
-                        'NY.GDP.MKTP.CD']
+                        'DT.DOD.DECT.CD', #em valor absoluto 
+                        'FS.AST.PRVT.GD.ZS']
 
-    indicadores_negativos = ['GC.DOD.TOTL.GD.ZS', 'DT.DOD.DECT.CD']
+    indicadores_negativos = ['DT.DOD.DECT.CD', 'GC.XPN.TOTL.GD.ZS'] #impactam negativamente no espaço fiscal  
 
     anos_df = [f'YR{ano}' for ano in anos_selecionados]
 
@@ -207,3 +205,4 @@ else:
         fig = plot_indicador(indicador_escolhido, codigo_indicador, legenda_y, sufixo,
                             paises_selecionados, anos_selecionados)
         st.pyplot(fig)
+ 
